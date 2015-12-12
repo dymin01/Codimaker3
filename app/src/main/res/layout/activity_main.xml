@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="신발"
         android:gravity="center"
-        android:id="@+id/tv_shose"
+        android:id="@+id/tv_shoes"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:textSize="50dp"
@@ -45,7 +45,7 @@
         android:id="@+id/img_top"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/tv_pants"
-        android:layout_alignEnd="@+id/img_shose"
+        android:layout_alignEnd="@+id/img_shoes"
         android:layout_toEndOf="@+id/tv_top" />
 
     <ImageView
@@ -60,10 +60,10 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/img_shose"
+        android:id="@+id/img_shoes"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/tv_shose"
-        android:layout_alignTop="@+id/tv_shose" />
+        android:layout_toEndOf="@+id/tv_shoes"
+        android:layout_alignTop="@+id/tv_shoes" />
 
 </RelativeLayout>

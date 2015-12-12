@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView mImgTop;
     ImageView mImgPants;
-    ImageView mImgShose;
+    ImageView mImgShoes;
 
     final static int TOP = 0;
     final static int PANTS = 1;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         mImgTop = (ImageView) findViewById(R.id.img_top);
         mImgPants = (ImageView) findViewById(R.id.img_pants);
-        mImgShose = (ImageView) findViewById(R.id.img_shose);
+        mImgShoes = (ImageView) findViewById(R.id.img_shoes);
 
         mImgTop.setOnClickListener(new ImageView.OnClickListener() {
             @Override
@@ -69,15 +69,15 @@ public class MainActivity extends AppCompatActivity {
         mImgPants.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Top.class);
+                Intent intent = new Intent(MainActivity.this, Pants.class);
                 startActivityForResult(intent, PANTS);
             }
         });
 
-        mImgShose.setOnClickListener(new ImageView.OnClickListener() {
+        mImgShoes.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Top.class);
+                Intent intent = new Intent(MainActivity.this, Shoes.class);
                 startActivityForResult(intent, SHOES);
             }
         });
@@ -89,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK) {
                     Toast toast = Toast.makeText(getApplicationContext(), "TOP", Toast.LENGTH_LONG);
                     toast.show();
+                }
+                else if(resultCode == 500) {
+                    Intent intent = new Intent(MainActivity.this, Top.class);
+                    startActivityForResult(intent, TOP);
                 }
                 break;
             case PANTS:
