@@ -28,10 +28,10 @@ import java.util.ArrayList;
 
 public class Top extends AppCompatActivity {
 
-    Button mBtOk;
     Button mBtCancel;
     Button mBtPlus;
 
+    Uri uri;
     Intent mItTemp;
     ArrayList<String> itemList = new ArrayList<String>();
 
@@ -132,15 +132,22 @@ public class Top extends AppCompatActivity {
         setContentView(R.layout.activity_top);
 
         mBtCancel = (Button) findViewById(R.id.bt_cancel);
-        mBtOk = (Button) findViewById(R.id.bt_OK);
         mBtPlus = (Button) findViewById(R.id.bt_plus);
+
+
 
         GridView gridview = (GridView) findViewById(R.id.gridView);
 
+        ImageAdapter ia = new ImageAdapter(this);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mItTemp.putExtra("img", itemList.get(position));
+                Uri uri = Uri.parse(itemList.get(position));
+                String temp = itemList.get(position);
+                //mItTemp.putExtra("img", itemList.get(position));
+                mItTemp = new Intent().putExtra("key", temp);
+                setResult(RESULT_OK, mItTemp);
+                finish();
             }
         });
 
@@ -160,16 +167,6 @@ public class Top extends AppCompatActivity {
         for (File file : files){
             myImageAdapter.add(file.getAbsolutePath());
         }
-
-        mBtOk.setOnClickListener(new Button.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                setResult(RESULT_OK, mItTemp);
-                finish();
-            }
-        });
 
         mBtCancel.setOnClickListener(new Button.OnClickListener() {
 
@@ -239,6 +236,25 @@ public class Top extends AppCompatActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private String getImageInfo(String ImageData, String Location, String thumbID){
+        String imageDataPath = null;
+        String[] proj = {MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.SIZE};
+        Cursor imageCursor = managedQuery(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                proj, "_ID='" + thumbID + "'", null, null);
+
+        if (imageCursor != null && imageCursor.moveToFirst()){
+            if (imageCursor.getCount() > 0){
+                int imgData = imageCursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                imageDataPath = imageCursor.getString(imgData);
+            }
+        }
+        imageCursor.close();
+        return imageDataPath;
     }
 }
 
