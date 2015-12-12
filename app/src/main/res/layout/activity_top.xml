@@ -22,4 +22,27 @@
         android:id="@+id/bt_OK"
         android:layout_alignTop="@+id/bt_cancel"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/bt_plus"
+        android:layout_alignBottom="@+id/bt_cancel"
+        android:layout_toEndOf="@+id/bt_cancel" />
+
+    <GridView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/gridView"
+        android:layout_centerVertical="true"
+        android:numColumns="auto_fit"
+        android:listSelector="#ff0084"
+        android:columnWidth="100dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="spacingWidthUniform"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/bt_cancel"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

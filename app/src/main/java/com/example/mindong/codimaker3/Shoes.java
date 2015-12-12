@@ -9,6 +9,7 @@ public class Shoes extends AppCompatActivity {
 
     Button mBtCancel;
     Button mBtOk;
+    Button mBtPlus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +18,7 @@ public class Shoes extends AppCompatActivity {
 
         mBtCancel = (Button) findViewById(R.id.bt_cancel);
         mBtOk = (Button) findViewById(R.id.bt_OK);
+        mBtPlus = (Button) findViewById(R.id.bt_plus);
 
         mBtOk.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -31,6 +33,14 @@ public class Shoes extends AppCompatActivity {
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
                 finish();
+            }
+        });
+
+        mBtPlus.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

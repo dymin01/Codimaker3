@@ -22,4 +22,12 @@
         android:id="@+id/bt_OK"
         android:layout_alignTop="@+id/bt_cancel"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/bt_plus"
+        android:layout_alignBottom="@+id/bt_cancel"
+        android:layout_toEndOf="@+id/bt_cancel" />
 </RelativeLayout>
