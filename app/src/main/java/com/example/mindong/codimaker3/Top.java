@@ -33,13 +33,14 @@ public class Top extends AppCompatActivity {
     Button mBtPlus;
 
     Intent mItTemp;
+    ArrayList<String> itemList = new ArrayList<String>();
 
     final static int GALLERY = 100;
 
     public class ImageAdapter extends BaseAdapter {
 
         private Context mContext;
-        ArrayList<String> itemList = new ArrayList<String>();
+
 
         public ImageAdapter(Context c) {
             mContext = c;
@@ -139,7 +140,7 @@ public class Top extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                mItTemp.putExtra("img", itemList.get(position));
             }
         });
 
@@ -165,7 +166,7 @@ public class Top extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                setResult(RESULT_OK);
+                setResult(RESULT_OK, mItTemp);
                 finish();
             }
         });

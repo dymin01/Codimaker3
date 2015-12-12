@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         String str = Environment.getExternalStorageState();
         if ( str.equals(Environment.MEDIA_MOUNTED)) {
 
@@ -87,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case TOP:
                 if(resultCode == RESULT_OK) {
+
+                    mImgTop.setImageURI(data.getStringExtra("img"));
+
                     Toast toast = Toast.makeText(getApplicationContext(), "TOP", Toast.LENGTH_LONG);
                     toast.show();
                 }
