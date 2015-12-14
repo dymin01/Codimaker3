@@ -17,7 +17,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -161,8 +160,6 @@ public class Top extends AppCompatActivity {
         //사진이 있는 폴더 path
         String targetPath = ExternalStorageDirectoryPath + "/android/data/com.example.mindong.codimaker3/TOP";
 
-        Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
-
         //사진이 있는 폴더를 가르키는 file
         File targetDirector = new File(targetPath);
 
@@ -181,17 +178,11 @@ public class Top extends AppCompatActivity {
                 INTENT_EXTRA.putExtra("img", itemList.get(position));
             }
         });
-
-        //OK버튼 clickListener
+            //OK버튼 clickListener
         mBtOk.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(INTENT_EXTRA.getExtras().getString("img") == null){
-                    Toast toast = Toast.makeText(getApplicationContext(), "잘못된 선택입니다", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-
                 setResult(RESULT_OK, INTENT_EXTRA);
                 finish();
             }
@@ -218,16 +209,16 @@ public class Top extends AppCompatActivity {
             }
         });
 
-        //Remove버튼 ClickListener
-        mBtRemove.setOnClickListener(new Button.OnClickListener() {
+            //Remove버튼 ClickListener
+            mBtRemove.setOnClickListener(new Button.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
-                setResult(REMOVE, INTENT_EXTRA); // 300 = minus result code
-                finish();
-            }
-        });
+                    setResult(REMOVE, INTENT_EXTRA); // 300 = minus result code
+                    finish();
+                }
+            });
 
     }
 
@@ -283,4 +274,3 @@ public class Top extends AppCompatActivity {
         }
     }
 }
-
