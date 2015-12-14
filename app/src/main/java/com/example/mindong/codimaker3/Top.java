@@ -33,10 +33,9 @@ public class Top extends AppCompatActivity {
     Button mBtPlus;
     Button mBtRemove;
 
-    //Intent mItTemp = new Intent(getApplicationContext(), MainActivity.class);
     ArrayList<String> itemList = new ArrayList<String>();
 
-    //reresultcode Value set
+    //resultcode Value set
     final static int GALLERY = 100;
     final static int RESTART = 500;
     final static int REMOVE = 300;
@@ -112,8 +111,8 @@ public class Top extends AppCompatActivity {
 
         //이미지 높이와 넓이 set하는 함수
         public int calculateInSampleSize(
-
                 BitmapFactory.Options options, int reqWidth, int reqHeight) {
+
             // Raw height and width of image
             final int height = options.outHeight;
             final int width = options.outWidth;
@@ -134,8 +133,8 @@ public class Top extends AppCompatActivity {
 
     ImageAdapter myImageAdapter;
 
-    //intent Extra
-    Intent INTENT_EXTRA = new Intent(Top.this, MainActivity.class);
+    //intent Extra Value
+    Intent INTENT_EXTRA = new Intent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
