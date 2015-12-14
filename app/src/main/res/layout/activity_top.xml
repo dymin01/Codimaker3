@@ -39,9 +39,18 @@
         android:numColumns="auto_fit"
         android:columnWidth="100dp"
         android:verticalSpacing="10dp"
+        android:listSelector="#FC63E0"
         android:horizontalSpacing="10dp"
         android:stretchMode="spacingWidthUniform"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/bt_cancel"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="remove"
+        android:id="@+id/bt_remove"
+        android:layout_above="@+id/gridView"
+        android:layout_toEndOf="@+id/bt_plus" />
 </RelativeLayout>
