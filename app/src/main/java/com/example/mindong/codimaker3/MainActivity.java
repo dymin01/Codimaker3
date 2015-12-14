@@ -2,6 +2,9 @@ package com.example.mindong.codimaker3;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.Image;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,29 +91,108 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case TOP:
                 if(resultCode == RESULT_OK) {
+                    String str = data.getExtras().getString("img");
 
-                    mImgTop.setImageURI(data.getStringExtra("img"));
+                    File temp = new File(str);
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "TOP", Toast.LENGTH_LONG);
-                    toast.show();
+                    Bitmap bitmap = decodeFile(temp);
+
+                    mImgTop.setImageBitmap(bitmap);
+
                 }
                 else if(resultCode == 500) {
                     Intent intent = new Intent(MainActivity.this, Top.class);
                     startActivityForResult(intent, TOP);
                 }
+                else if(resultCode == 300) { // remove
+                    Intent intent = new Intent(MainActivity.this, Top.class);
+                    String str = data.getExtras().getString("img");
+                    fileDelete(str);
+                    startActivityForResult(intent, TOP);
+                }
                 break;
             case PANTS:
                 if(resultCode == RESULT_OK) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "PANTS", Toast.LENGTH_LONG);
-                    toast.show();
+                    String str = data.getExtras().getString("img");
+
+                    File temp = new File(str);
+
+                    Bitmap bitmap = decodeFile(temp);
+
+                    mImgPants.setImageBitmap(bitmap);
+                }
+                else if(resultCode == 500) {
+                    Intent intent = new Intent(MainActivity.this, Pants.class);
+                    startActivityForResult(intent, PANTS);
+                }
+                else if(resultCode == 300) { // remove
+                    Intent intent = new Intent(MainActivity.this, Pants.class);
+                    String str = data.getExtras().getString("img");
+                    fileDelete(str);
+                    startActivityForResult(intent, PANTS);
                 }
                 break;
             case SHOES:
                 if(resultCode == RESULT_OK) {
+
+                    String str = data.getExtras().getString("img");
+
+                    File temp = new File(str);
+
+                    Bitmap bitmap = decodeFile(temp);
+
+                    mImgShoes.setImageBitmap(bitmap);
+                    /*String str = data.getExtras().getString("img");
+                    Bitmap image = BitmapFactory.decodeFile(str);
+
+                    mImgShoes.setImageBitmap(image);
+
                     Toast toast = Toast.makeText(getApplicationContext(), "SHOES", Toast.LENGTH_LONG);
-                    toast.show();
+                    toast.show();*/
                 }
+                else if(resultCode == 500) {
+                    Intent intent = new Intent(MainActivity.this, Shoes.class);
+                    startActivityForResult(intent, SHOES);
+                }
+                else if(resultCode == 300) { // remove
+                    Intent intent = new Intent(MainActivity.this, Shoes.class);
+                    String str = data.getExtras().getString("img");
+                    fileDelete(str);
+                    startActivityForResult(intent, SHOES);
+                }
+                break;
         }
+    }
+
+    public static  void fileDelete(String FileName) {
+        File f = new File(FileName);
+        f.delete();
+    }
+
+    private Bitmap decodeFile(File f){
+        try {
+            //decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f),null,o);
+            //Find the correct scale value. It should be the power of 2.
+            final int REQUIRED_SIZE=70;
+            int width_tmp=o.outWidth, height_tmp=o.outHeight;
+            int scale=1;
+            while(true){
+                if(width_tmp/2<REQUIRED_SIZE || height_tmp/2<REQUIRED_SIZE)
+                    break;
+                width_tmp/=2;
+                height_tmp/=2;
+                scale++;
+            }
+
+            //decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize=scale;
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {}
+        return null;
     }
 
 }

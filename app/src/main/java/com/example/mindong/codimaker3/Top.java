@@ -28,11 +28,12 @@ import java.util.ArrayList;
 
 public class Top extends AppCompatActivity {
 
+    Button mBtOk;
     Button mBtCancel;
     Button mBtPlus;
+    Button mBtRemove;
 
-    Uri uri;
-    Intent mItTemp;
+    //Intent mItTemp = new Intent(getApplicationContext(), MainActivity.class);
     ArrayList<String> itemList = new ArrayList<String>();
 
     final static int GALLERY = 100;
@@ -126,30 +127,21 @@ public class Top extends AppCompatActivity {
 
     ImageAdapter myImageAdapter;
 
+    Intent mItTemp = new Intent(Top.this, MainActivity.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top);
 
         mBtCancel = (Button) findViewById(R.id.bt_cancel);
+        mBtOk = (Button) findViewById(R.id.bt_OK);
         mBtPlus = (Button) findViewById(R.id.bt_plus);
-
-
+        mBtRemove = (Button) findViewById(R.id.bt_remove);
 
         GridView gridview = (GridView) findViewById(R.id.gridView);
 
-        ImageAdapter ia = new ImageAdapter(this);
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Uri uri = Uri.parse(itemList.get(position));
-                String temp = itemList.get(position);
-                //mItTemp.putExtra("img", itemList.get(position));
-                mItTemp = new Intent().putExtra("key", temp);
-                setResult(RESULT_OK, mItTemp);
-                finish();
-            }
-        });
+        //원래 위치
 
         myImageAdapter = new ImageAdapter(this);
         gridview.setAdapter(myImageAdapter);
@@ -161,15 +153,37 @@ public class Top extends AppCompatActivity {
         String targetPath = ExternalStorageDirectoryPath + "/android/data/com.example.mindong.codimaker3/TOP";
 
         Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
+
         File targetDirector = new File(targetPath);
 
         File[] files = targetDirector.listFiles();
+
         for (File file : files){
             myImageAdapter.add(file.getAbsolutePath());
         }
 
-        mBtCancel.setOnClickListener(new Button.OnClickListener() {
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mItTemp.putExtra("img", itemList.get(position));
+            }
+        });
+
+        mBtOk.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(mItTemp.getExtras().getString("img") == null){
+                    Toast toast = Toast.makeText(getApplicationContext(), "잘못된 선택입니다", Toast.LENGTH_LONG);
+                }
+
+                setResult(RESULT_OK, mItTemp);
+                finish();
+            }
+        });
+
+        mBtCancel.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
@@ -185,6 +199,16 @@ public class Top extends AppCompatActivity {
                 intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
                 intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, GALLERY);
+            }
+        });
+
+        mBtRemove.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                setResult(300, mItTemp); // 300 = minus result code
+                finish();
             }
         });
 
@@ -209,7 +233,7 @@ public class Top extends AppCompatActivity {
 
                 fileCopy(imgPath, T_Path + "/" + imgName);
 
-                setResult(500);
+                setResult(500); //
                 finish();
 
             }
@@ -237,25 +261,5 @@ public class Top extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    private String getImageInfo(String ImageData, String Location, String thumbID){
-        String imageDataPath = null;
-        String[] proj = {MediaStore.Images.Media._ID,
-                MediaStore.Images.Media.DATA,
-                MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.SIZE};
-        Cursor imageCursor = managedQuery(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                proj, "_ID='" + thumbID + "'", null, null);
-
-        if (imageCursor != null && imageCursor.moveToFirst()){
-            if (imageCursor.getCount() > 0){
-                int imgData = imageCursor.getColumnIndex(MediaStore.Images.Media.DATA);
-                imageDataPath = imageCursor.getString(imgData);
-            }
-        }
-        imageCursor.close();
-        return imageDataPath;
-    }
 }
-
 
