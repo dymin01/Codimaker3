@@ -35,6 +35,9 @@ public class Pants extends AppCompatActivity {
     ArrayList<String> itemList = new ArrayList<String>();
 
     final static int GALLERY = 100;
+    final static int RESTART = 500;
+    final static int REMOVE = 300;
+
 
     public class ImageAdapter extends BaseAdapter {
 
@@ -150,8 +153,6 @@ public class Pants extends AppCompatActivity {
 
         String targetPath = ExternalStorageDirectoryPath + "/android/data/com.example.mindong.codimaker3/PANTS";
 
-        Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
-
         File targetDirector = new File(targetPath);
 
         File[] files = targetDirector.listFiles();
@@ -201,7 +202,7 @@ public class Pants extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                setResult(300, mItTemp); // 300 = minus result code
+                setResult(REMOVE, mItTemp); // 300 = minus result code
                 finish();
             }
         });
@@ -227,7 +228,7 @@ public class Pants extends AppCompatActivity {
 
                 fileCopy(imgPath, T_Path + "/" + imgName);
 
-                setResult(500); //
+                setResult(RESTART); //
                 finish();
 
             }

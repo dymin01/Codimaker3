@@ -25,6 +25,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class Shoes extends AppCompatActivity {
+
     Button mBtOk;
     Button mBtCancel;
     Button mBtPlus;
@@ -34,6 +35,9 @@ public class Shoes extends AppCompatActivity {
     ArrayList<String> itemList = new ArrayList<String>();
 
     final static int GALLERY = 100;
+    final static int RESTART = 500;
+    final static int REMOVE = 300;
+
 
     public class ImageAdapter extends BaseAdapter {
 
@@ -149,8 +153,6 @@ public class Shoes extends AppCompatActivity {
 
         String targetPath = ExternalStorageDirectoryPath + "/android/data/com.example.mindong.codimaker3/SHOES";
 
-        Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
-
         File targetDirector = new File(targetPath);
 
         File[] files = targetDirector.listFiles();
@@ -200,7 +202,7 @@ public class Shoes extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                setResult(300, mItTemp); // 300 = minus result code
+                setResult(REMOVE, mItTemp); // 300 = minus result code
                 finish();
             }
         });
@@ -226,7 +228,7 @@ public class Shoes extends AppCompatActivity {
 
                 fileCopy(imgPath, T_Path + "/" + imgName);
 
-                setResult(500); //
+                setResult(RESTART); //
                 finish();
 
             }

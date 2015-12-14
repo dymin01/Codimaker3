@@ -23,9 +23,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView mImgPants;
     ImageView mImgShoes;
 
+    //SET INTENT VALUE
     final static int TOP = 0;
     final static int PANTS = 1;
     final static int SHOES = 2;
+    final static int RESTART = 500;
+    final static int REMOVE = 300;
 
 
     @Override
@@ -33,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //sd카드 폴더 Path
         String str = Environment.getExternalStorageState();
         if ( str.equals(Environment.MEDIA_MOUNTED)) {
-
+            //원하는 폴더 Path
             String Top_Path = "/sdcard/android/data/com.example.mindong.codimaker3/TOP";
             String Pants_Path = "/sdcard/android/data/com.example.mindong.codimaker3/PANTS";
             String Shoes_Path = "/sdcard/android/data/com.example.mindong.codimaker3/SHOES";
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mImgPants = (ImageView) findViewById(R.id.img_pants);
         mImgShoes = (ImageView) findViewById(R.id.img_shoes);
 
+        //Image ClickListener
         mImgTop.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,84 +97,124 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case TOP:
                 if(resultCode == RESULT_OK) {
-                    String str = data.getExtras().getString("img");
+                    //data EXTRA에서 IMAGE Path받아오기
+                    if(data.getExtras() == null) {
+                        Intent intent = new Intent(MainActivity.this, Top.class);
+                        Toast.makeText(getApplicationContext(), "사진을 선택해 주세요.", Toast.LENGTH_LONG).show();
+                        startActivityForResult(intent, TOP);
+                    }
+                    else {
+                        String str = data.getExtras().getString("img");
 
-                    File temp = new File(str);
-
-                    Bitmap bitmap = decodeFile(temp);
-
-                    mImgTop.setImageBitmap(bitmap);
+                        File temp = new File(str);
+                        //파일을 비트맵으로 저장
+                        Bitmap bitmap = decodeFile(temp);
+                        //원히는 이미지뷰에 비트맵을 set
+                        mImgTop.setImageBitmap(bitmap);
+                    }
 
                 }
-                else if(resultCode == 500) {
+                //intent를 다시 실행
+                else if(resultCode == RESTART) {
                     Intent intent = new Intent(MainActivity.this, Top.class);
                     startActivityForResult(intent, TOP);
                 }
-                else if(resultCode == 300) { // remove
-                    Intent intent = new Intent(MainActivity.this, Top.class);
-                    String str = data.getExtras().getString("img");
-                    fileDelete(str);
-                    startActivityForResult(intent, TOP);
+                //str로 지정된 Image파일을 지운 후 intent를 다시 실행
+                else if(resultCode == REMOVE) { // remove
+                    if(data.getExtras() == null) {
+                        Intent intent = new Intent(MainActivity.this, Top.class);
+                        Toast.makeText(getApplicationContext(), "사진을 선택해 주세요.", Toast.LENGTH_LONG).show();
+                        startActivityForResult(intent, TOP);
+                    }
+                    else {
+                        Intent intent = new Intent(MainActivity.this, Top.class);
+                        String str = data.getExtras().getString("img");
+                        fileDelete(str);
+                        startActivityForResult(intent, TOP);
+                    }
                 }
                 break;
             case PANTS:
                 if(resultCode == RESULT_OK) {
-                    String str = data.getExtras().getString("img");
+                    if(data.getExtras() == null) {
+                        Intent intent = new Intent(MainActivity.this, Pants.class);
+                        Toast.makeText(getApplicationContext(), "사진을 선택해 주세요.", Toast.LENGTH_LONG).show();
+                        startActivityForResult(intent, PANTS);
+                    }
+                    else {
+                        String str = data.getExtras().getString("img");
 
-                    File temp = new File(str);
-
-                    Bitmap bitmap = decodeFile(temp);
-
-                    mImgPants.setImageBitmap(bitmap);
+                        File temp = new File(str);
+                        //파일을 비트맵으로 저장
+                        Bitmap bitmap = decodeFile(temp);
+                        //원히는 이미지뷰에 비트맵을 set
+                        mImgPants.setImageBitmap(bitmap);
+                    }
                 }
-                else if(resultCode == 500) {
+                else if(resultCode == RESTART) {
                     Intent intent = new Intent(MainActivity.this, Pants.class);
                     startActivityForResult(intent, PANTS);
                 }
-                else if(resultCode == 300) { // remove
-                    Intent intent = new Intent(MainActivity.this, Pants.class);
-                    String str = data.getExtras().getString("img");
-                    fileDelete(str);
-                    startActivityForResult(intent, PANTS);
+                else if(resultCode == REMOVE) { // remove
+                    if(data.getExtras() == null) {
+                        Intent intent = new Intent(MainActivity.this, Pants.class);
+                        Toast.makeText(getApplicationContext(), "사진을 선택해 주세요.", Toast.LENGTH_LONG).show();
+                        startActivityForResult(intent, PANTS);
+                    }
+                    else {
+                        Intent intent = new Intent(MainActivity.this, Pants.class);
+                        String str = data.getExtras().getString("img");
+                        fileDelete(str);
+                        startActivityForResult(intent, PANTS);
+                    }
                 }
                 break;
             case SHOES:
                 if(resultCode == RESULT_OK) {
 
-                    String str = data.getExtras().getString("img");
+                    if(data.getExtras() == null) {
+                        Intent intent = new Intent(MainActivity.this, Shoes.class);
+                        Toast.makeText(getApplicationContext(), "사진을 선택해 주세요.", Toast.LENGTH_LONG).show();
+                        startActivityForResult(intent, SHOES);
+                    }
+                    else {
+                        String str = data.getExtras().getString("img");
 
-                    File temp = new File(str);
-
-                    Bitmap bitmap = decodeFile(temp);
-
-                    mImgShoes.setImageBitmap(bitmap);
-                    /*String str = data.getExtras().getString("img");
-                    Bitmap image = BitmapFactory.decodeFile(str);
-
-                    mImgShoes.setImageBitmap(image);
-
-                    Toast toast = Toast.makeText(getApplicationContext(), "SHOES", Toast.LENGTH_LONG);
-                    toast.show();*/
+                        File temp = new File(str);
+                        //파일을 비트맵으로 저장
+                        Bitmap bitmap = decodeFile(temp);
+                        //원히는 이미지뷰에 비트맵을 set
+                        mImgShoes.setImageBitmap(bitmap);
+                    }
                 }
-                else if(resultCode == 500) {
+                else if(resultCode == RESTART) {
                     Intent intent = new Intent(MainActivity.this, Shoes.class);
                     startActivityForResult(intent, SHOES);
                 }
-                else if(resultCode == 300) { // remove
-                    Intent intent = new Intent(MainActivity.this, Shoes.class);
-                    String str = data.getExtras().getString("img");
-                    fileDelete(str);
-                    startActivityForResult(intent, SHOES);
+                else if(resultCode == REMOVE) { // remove
+                    if(data.getExtras() == null) {
+                        Intent intent = new Intent(MainActivity.this, Shoes.class);
+                        Toast.makeText(getApplicationContext(), "사진을 선택해 주세요.", Toast.LENGTH_LONG).show();
+                        startActivityForResult(intent, SHOES);
+                    }
+                    else {
+                        Intent intent = new Intent(MainActivity.this, Shoes.class);
+                        String str = data.getExtras().getString("img");
+                        fileDelete(str);
+                        startActivityForResult(intent, SHOES);
+                    }
                 }
                 break;
         }
     }
 
+    //파일을 지우는 함수
     public static  void fileDelete(String FileName) {
         File f = new File(FileName);
         f.delete();
     }
 
+    //Bitmap 사이즈를 줄이는 함수
     private Bitmap decodeFile(File f){
         try {
             //decode image size
