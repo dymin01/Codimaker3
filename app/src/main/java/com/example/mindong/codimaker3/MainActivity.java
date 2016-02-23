@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     final static int RESTART = 500;
     final static int REMOVE = 300;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
